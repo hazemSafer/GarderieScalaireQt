@@ -1,5 +1,8 @@
 QT       += core gui
 
+QT += sql
+QT += printsupport
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -16,13 +19,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Eleve.cpp \
+    Enseignant.cpp \
     connection.cpp \
-    main.cpp \
-    mainwindow.cpp
+    main.cpp
 
 HEADERS += \
-    connection.h \
-    mainwindow.h
+    Eleve.h \
+    Enseignant.h \
+    connection.h
 
 FORMS += \
     mainwindow.ui
