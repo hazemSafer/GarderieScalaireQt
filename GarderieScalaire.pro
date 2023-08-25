@@ -22,15 +22,17 @@ SOURCES += \
     Eleve.cpp \
     Enseignant.cpp \
     connection.cpp \
+    eleve_ui.cpp \
     main.cpp
 
 HEADERS += \
     Eleve.h \
     Enseignant.h \
-    connection.h
+    connection.h \
+    eleve_ui.h
 
 FORMS += \
-    mainwindow.ui
+    eleve_ui.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

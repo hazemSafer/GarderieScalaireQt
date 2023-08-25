@@ -128,12 +128,12 @@ Eleve Eleve::findById(int id)
 
     if (q.exec() && q.next()) {
         QString prenom = q.value("PRENOM").toString();
-        QString etatnom = q.value("NOM").toString();
+        QString nom = q.value("NOM").toString();
         QDate dateNaissance = q.value("DATENAISSANCE").toDate();
         QString Adresse = q.value("ADRESSE").toString();
         int niveau = q.value("NIVEAU").toInt();
         QString respLegal = q.value("RESPONSABLELEGAL").toString();
-        return Eleve(id, prenom, etatnom, dateNaissance, Adresse, niveau, respLegal);
+        return Eleve(id, prenom, nom, dateNaissance, Adresse, niveau, respLegal);
     }
 
     return Eleve();
