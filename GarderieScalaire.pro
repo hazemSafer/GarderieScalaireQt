@@ -32,7 +32,8 @@ HEADERS += \
     eleve_ui.h
 
 FORMS += \
-    eleve_ui.ui
+    eleve_ui.ui \
+    ensaignant_ui.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
