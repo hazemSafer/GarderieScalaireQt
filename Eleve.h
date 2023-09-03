@@ -8,12 +8,12 @@
 class Eleve {
 public:
     Eleve();
-    Eleve(int id, QString prenom, QString etatnom, QDate dateNaissance, QString Adresse, int niveau, QString respLegal);
+    Eleve(int id, QString prenom, QString nom, QDate dateNaissance, QString Adresse, int niveau, QString respLegal);
 
     // Getters
     int getId() const;
     QString getPrenom() const;
-    QString getEtatNom() const;
+    QString getNom() const;
     QDate getDateNaissance() const;
     QString getAdresse() const;
     int getNiveau() const;
@@ -33,8 +33,12 @@ public:
     static bool supprimer(int id);
     static Eleve findById(int id);
     bool modifier();
+    static void imprimer(int id);
 
-    QSqlQueryModel* trie(QString croissance, QString critere);
+    static QHash<QString, int> getAgeDistribution();
+    static QHash<QString, int> getNiveauDistribution();
+
+    static QSqlQueryModel* trie(QString croissance, QString critere);
 
 private:
     int id;

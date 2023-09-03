@@ -34,7 +34,10 @@ public:
     static Enseignant findById(int id);
     bool modifier();
 
-    QSqlQueryModel* trie(QString croissance, QString critere);
+
+    static void imprimer(int id);
+    static QSqlQueryModel* trie(QString croissance, QString critere);
+    static QHash<QString, int> getAncienneteDistribution();
 
 private:
     int id;

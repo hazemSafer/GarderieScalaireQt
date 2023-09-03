@@ -2,6 +2,8 @@ QT       += core gui
 
 QT += sql
 QT += printsupport
+QT += charts
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -23,17 +25,22 @@ SOURCES += \
     Enseignant.cpp \
     connection.cpp \
     eleve_ui.cpp \
-    main.cpp
+    enseignant_ui.cpp \
+    main.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     Eleve.h \
     Enseignant.h \
     connection.h \
-    eleve_ui.h
+    eleve_ui.h \
+    enseignant_ui.h \
+    mainwindow.h
 
 FORMS += \
     eleve_ui.ui \
-    ensaignant_ui.ui
+    enseignant_ui.ui \
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

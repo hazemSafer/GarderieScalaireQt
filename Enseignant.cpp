@@ -1,7 +1,12 @@
 #include "Enseignant.h"
+#include <QString>
 #include <QSqlQuery>
 #include <QtDebug>
 #include <QObject>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QPainter>
+
 
 Enseignant::Enseignant() {
     id = 0;
@@ -152,6 +157,69 @@ bool Enseignant::modifier()
     return q.exec();
 }
 
+void Enseignant::imprimer(int id)
+{
+    QString nom;
+    int y0 = 2000;
+    Enseignant e = findById(id);
+
+    QString pdfFileName = QString::number(e.getId()) + "_" + e.getNom() + "_" + e.getPrenom() + ".pdf";
+
+    QPrinter printer(QPrinter::HighResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setFullPage(QPrinter::A4);
+    printer.setOutputFileName(pdfFileName);
+
+    QPainter painter(&printer);
+    painter.setFont(QFont("Verdana", 30));
+    painter.drawText(200, 1000, "Fiche d'enseignant");
+
+    painter.setFont(QFont("Verdana", 12));
+    y0 += 250;
+    painter.drawText(400, y0, "Nom de l'Application : Garderie Scalaire");
+    y0 += 500;
+
+    QFont titleFont("Verdana", 12, QFont::Bold);
+    titleFont.setUnderline(true);
+    titleFont.setCapitalization(QFont::AllUppercase);
+    painter.setFont(titleFont);
+
+    painter.setPen(QColor(Qt::darkBlue)); // Set color to dark blue
+
+    QStringList subtitles = {
+        "IDENTIFIANT",
+        "PRENOM",
+        "NOM",
+        "DATE DE NAISSANCE",
+        "ADRESSE",
+        "SALAIRE",
+        "ANCIENNETE"
+    };
+
+    QStringList contents = {
+        QString::number(e.getId()),
+        e.getPrenom(),
+        e.getNom(),
+        e.getDateNaissance().toString(),
+        e.getAdresse(),
+        QString::number(e.getSalaire()),
+        QString::number(e.getAnciennete())
+    };
+
+    for (int i = 0; i < subtitles.size(); ++i)
+    {
+        painter.drawText(400, y0, subtitles[i] + " :");
+        painter.setFont(QFont("Verdana", 12)); // Set content font to normal
+        painter.drawText(4000, y0, contents[i]);
+        painter.setFont(titleFont); // Reset font to subtitle style
+        y0 += 250;
+    }
+
+    painter.end();
+}
+
+
+
 QSqlQueryModel* Enseignant::trie(QString croissance, QString critere)
 {
     QSqlQueryModel* modal = new QSqlQueryModel();
@@ -167,3 +235,40 @@ QSqlQueryModel* Enseignant::trie(QString croissance, QString critere)
 
     return modal;
 }
+
+QHash<QString, int> Enseignant::getAncienneteDistribution()
+{
+    QHash<QString, int> ancienneteDistribution;
+
+    // Récupérez la liste des élèves depuis votre base de données
+    // Par exemple, vous pouvez utiliser votre fonction afficher() pour obtenir une liste de tous les élèves.
+    QSqlQueryModel* model = afficher();
+
+    // Calculez l'âge de chaque élève et mettez à jour la répartition par âge
+    QDateTime now = QDateTime::currentDateTime();
+    for (int row = 0; row < model->rowCount(); ++row) {
+        int anciennete = model->data(model->index(row, 6)).toInt(); // Supposons que la date de naissance est dans la colonne 3
+
+        // Classifiez l'âge dans des groupes
+        QString ancienneteGroup;
+        if (anciennete < 2) {
+            ancienneteGroup = "Moins de 2 ans";
+        } else if (anciennete < 4) {
+            ancienneteGroup = "2-4 ans";
+        } else if (anciennete < 6) {
+            ancienneteGroup = "4-6 ans";
+        } else {
+            ancienneteGroup = "6 ans et plus";
+        }
+
+        // Mettez à jour la répartition par âge
+        if (ancienneteDistribution.contains(ancienneteGroup)) {
+            ancienneteDistribution[ancienneteGroup]++;
+        } else {
+            ancienneteDistribution[ancienneteGroup] = 1;
+        }
+    }
+
+    return ancienneteDistribution;
+}
+

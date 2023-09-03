@@ -1,22 +1,22 @@
-#ifndef ELEVE_UI_H
-#define ELEVE_UI_H
+#ifndef ENSEIGNANT_UI_H
+#define ENSEIGNANT_UI_H
 
 #include <QDialog>
 
 namespace Ui {
-class Eleve_ui;
+class Enseignant_ui;
 }
 
-class Eleve_ui : public QDialog
+class Enseignant_ui : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Eleve_ui(QWidget *parent = nullptr);
-    ~Eleve_ui();
+    explicit Enseignant_ui(QWidget *parent = nullptr);
+    ~Enseignant_ui();
 
-private :
-    Ui::Eleve_ui *ui;
+private:
+    Ui::Enseignant_ui *ui;
 
 private slots :
    void on_pushButton_back_clicked();
@@ -27,12 +27,11 @@ private slots :
    void on_radioButton_clicked();
    void on_radioButton_2_clicked();
    void on_search_field_textChanged(const QString &arg1);
-   void on_pushButton_stats_clicked();
 
 
    void on_pushButton_pdf_clicked();
    void on_tableView_activated(const QModelIndex &index);
-
+   void on_pushButton_stats_clicked();
 };
 
-#endif // ELEVE_UI_H
+#endif // ENSEIGNANT_UI_H
